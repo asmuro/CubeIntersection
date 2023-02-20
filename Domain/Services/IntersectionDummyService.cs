@@ -10,7 +10,7 @@ namespace Domain.Services
     /// <summary>
     /// Intersection dummy service in case we don't have the implementation of the specific shape
     /// </summary>
-    internal class IntersectionDummyService : IIntersectionService
+    public class IntersectionDummyService : IIntersectionService
     {
         #region IIntersectionService
 
@@ -22,7 +22,7 @@ namespace Domain.Services
         /// <inheritdoc/>
         public Task<bool> IntersectsAsync(IShape shape1, IShape shape2)
         {
-            return Task.FromResult<bool>(false);
+            return Task.FromResult(false);
         }
 
         #endregion

@@ -6,16 +6,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using Assert = NUnit.Framework.Assert;
 
-namespace TestCubeIntersection
+namespace TestCubeIntersection.Domain
 {
-    public class Tests
+    public class CubeIntersectionUnitTest
     {
         [SetUp]
         public void Setup()
         {
         }
 
-        [TestMethod]
+        [Test]
         public void Should_Return_IntersectionCubeService_When_Cube_Passed_As_Parameter()
         {
             //Arrange

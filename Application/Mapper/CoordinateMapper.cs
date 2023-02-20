@@ -15,7 +15,9 @@ namespace Application.Mapper
         /// <returns>Coordinate mapped</returns>
         public static Coordinate Map(CoordinateRequest coordinateRequest)
         {
-            return new Coordinate(coordinateRequest.X, coordinateRequest.Y, coordinateRequest.Z);
+            Coordinate coordinate = new Coordinate();
+            coordinate.SetCoordinates(coordinateRequest.X, coordinateRequest.Y, coordinateRequest.Z);
+            return coordinate;
         }
     }
 }

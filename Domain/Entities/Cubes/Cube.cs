@@ -8,11 +8,20 @@ namespace Domain.Entities.Cubes
     /// </summary>
     public partial class Cube: IShape
     {
+        public Cube()
+        {
+            Center = new Coordinate();
+        }
+
+        #region IShape
+
         /// <inheritdoc/>
         public Coordinate Center { get; private set; }
         
         /// <inheritdoc/>
         public int Dimension { get; private set; }
+
+        #endregion
 
         #region public methods
 
