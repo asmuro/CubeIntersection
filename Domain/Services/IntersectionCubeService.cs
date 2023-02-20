@@ -3,6 +3,9 @@ using Domain.Interfaces;
 
 namespace Domain.Services
 {
+    /// <summary>
+    /// Intersection service for type <see cref="Cube"/>
+    /// </summary>
     public class IntersectionCubeService : IIntersectionService
     {
         #region IIntersectionService
@@ -18,12 +21,12 @@ namespace Domain.Services
                 widthOverlapping = CalculateWidthOverlapping(cube1, cube2);
                 heightOverlapping = CalculateHeightOverlapping(cube1, cube2);
                 depthOverlapping = CalculateDepthOverlapping(cube1, cube2);
-
-
-                if (HaveSameCentreAndDimension(cube1, cube2))
-                    return Task.FromResult<double>(shape1.Dimension * shape1.Dimension * shape1.Dimension);
             }
-            return Task.FromResult<double>(widthOverlapping * heightOverlapping * depthOverlapping);
+
+            if (HaveSameCentreAndDimension(shape1, shape2))
+                return Task.FromResult<double>(shape1.Dimension * shape1.Dimension * shape1.Dimension);
+
+            return Task.FromResult(widthOverlapping * heightOverlapping * depthOverlapping);
         }
 
         /// <inheritdoc/>
@@ -37,12 +40,12 @@ namespace Domain.Services
 
         #region Intersection Volume
 
-        private bool HaveSameCentreAndDimension(Cube cube1, Cube cube2)
+        private bool HaveSameCentreAndDimension(IShape shape1, IShape shape2)
         {
-            return (cube1.Center.X == cube2.Center.X
-                && cube1.Center.Y == cube2.Center.Y
-                && cube1.Center.Z == cube2.Center.Z
-                && cube1.Dimension == cube2.Dimension);
+            return (shape1.Center.X == shape2.Center.X
+                && shape1.Center.Y == shape2.Center.Y
+                && shape1.Center.Z == shape2.Center.Z
+                && shape1.Dimension == shape2.Dimension);
         }
 
         private double CalculateWidthOverlapping(Cube cube1, Cube cube2)

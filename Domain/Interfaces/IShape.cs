@@ -2,6 +2,9 @@
 
 namespace Domain.Interfaces
 {
+    /// <summary>
+    /// Models a 3D Shape
+    /// </summary>
     public interface IShape
     {
         /// <summary>

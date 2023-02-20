@@ -16,8 +16,7 @@ namespace Domain.Services
         public async Task<double> IntersectionVolumeAsync(IShape shape1, IShape shape2)
         {
             IIntersectionFactory intersectionFactory = ContainerConfigurationModule.Resolve<IIntersectionFactory>();
-            IIntersectionService intersectionService = intersectionFactory.GetIntersectionService(shape1, shape2);
-            return await intersectionService.IntersectionVolumeAsync(shape1, shape2);
+            return await intersectionFactory.GetIntersectionService(shape1, shape2).IntersectionVolumeAsync(shape1, shape2);
         }
     }
 }

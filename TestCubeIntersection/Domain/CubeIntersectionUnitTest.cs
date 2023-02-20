@@ -1,3 +1,4 @@
+using Domain.Entities.Coordinates;
 using Domain.Entities.Cubes;
 using Domain.Interfaces;
 using Domain.Services;
@@ -5,16 +6,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using Assert = NUnit.Framework.Assert;
 
-namespace TestCubeIntersection
+namespace TestCubeIntersection.Domain
 {
-    public class Tests
+    public class CubeIntersectionUnitTest
     {
         [SetUp]
         public void Setup()
         {
         }
 
-        [TestMethod]
+        [Test]
         public void Should_Return_IntersectionCubeService_When_Cube_Passed_As_Parameter()
         {
             //Arrange
@@ -41,12 +42,8 @@ namespace TestCubeIntersection
             int cube1Dimension, int cube2CenterX, int cube2CenterY, int cube2CenterZ, int cube2Dimension, bool expectedValue)
         {
             //Arrange
-            Cube cube1 = new Cube();
-            cube1.SetCenter(new Domain.Entities.Coordinates.Coordinate(cube1CenterX, cube1CenterY, cube1CenterZ));
-            cube1.SetDimension(cube1Dimension);
-            Cube cube2 = new Cube();
-            cube2.SetCenter(new Domain.Entities.Coordinates.Coordinate(cube2CenterX, cube2CenterY, cube2CenterZ));
-            cube2.SetDimension(cube2Dimension);
+            Cube cube1 = CreateCube(cube1CenterX, cube1CenterY, cube1CenterZ, cube1Dimension);
+            Cube cube2 = CreateCube(cube2CenterX, cube2CenterY, cube2CenterZ, cube2Dimension);
             IIntersectionFactory intersectionFactory = Substitute.For<IIntersectionFactory>();
             intersectionFactory.GetIntersectionService(default, default).ReturnsForAnyArgs(new IntersectionCubeService());
             IIntersectionService intersectionCubeService = intersectionFactory.GetIntersectionService(cube1, cube2);
@@ -70,12 +67,8 @@ namespace TestCubeIntersection
             int cube1Dimension, int cube2CenterX, int cube2CenterY, int cube2CenterZ, int cube2Dimension, double expectedVolume)
         {
             //Arrange
-            Cube cube1 = new Cube();
-            cube1.SetCenter(new Domain.Entities.Coordinates.Coordinate(cube1CenterX, cube1CenterY, cube1CenterZ));
-            cube1.SetDimension(cube1Dimension);
-            Cube cube2 = new Cube();
-            cube2.SetCenter(new Domain.Entities.Coordinates.Coordinate(cube2CenterX, cube2CenterY, cube2CenterZ));
-            cube2.SetDimension(cube2Dimension);
+            Cube cube1 = CreateCube(cube1CenterX, cube1CenterY, cube1CenterZ, cube1Dimension);
+            Cube cube2 = CreateCube(cube2CenterX, cube2CenterY, cube2CenterZ, cube2Dimension);
             IIntersectionFactory intersectionFactory = Substitute.For<IIntersectionFactory>();
             intersectionFactory.GetIntersectionService(default, default).ReturnsForAnyArgs(new IntersectionCubeService());
             IIntersectionService intersectionCubeService = intersectionFactory.GetIntersectionService(cube1, cube2);
@@ -93,12 +86,8 @@ namespace TestCubeIntersection
             int cube1Dimension, int cube2CenterX, int cube2CenterY, int cube2CenterZ, int cube2Dimension)
         {
             //Arrange
-            Cube cube1 = new Cube();
-            cube1.SetCenter(new Domain.Entities.Coordinates.Coordinate(cube1CenterX, cube1CenterY, cube1CenterZ));
-            cube1.SetDimension(cube1Dimension);
-            Cube cube2 = new Cube();
-            cube2.SetCenter(new Domain.Entities.Coordinates.Coordinate(cube2CenterX, cube2CenterY, cube2CenterZ));
-            cube2.SetDimension(cube2Dimension);
+            Cube cube1 = CreateCube(cube1CenterX, cube1CenterY, cube1CenterZ, cube1Dimension);
+            Cube cube2 = CreateCube(cube2CenterX, cube2CenterY, cube2CenterZ, cube2Dimension);
             IIntersectionFactory intersectionFactory = Substitute.For<IIntersectionFactory>();
             intersectionFactory.GetIntersectionService(default, default).ReturnsForAnyArgs(new IntersectionCubeService());
             IIntersectionService intersectionCubeService = intersectionFactory.GetIntersectionService(cube1, cube2);
@@ -109,5 +98,20 @@ namespace TestCubeIntersection
             //Assert
             Assert.IsTrue(intersectedVolume < 0);
         }
+
+        #region Helpers
+
+        private Cube CreateCube(int cubeCenterX, int cubeCenterY, int cubeCenterZ,
+            int cubeDimension)
+        {
+            Cube cube = new Cube();
+            Coordinate coordinate = new Coordinate();
+            coordinate.SetCoordinates(cubeCenterX, cubeCenterY, cubeCenterZ);
+            cube.SetCenter(coordinate);
+            cube.SetDimension(cubeDimension);
+            return cube;
+        }
+
+        #endregion
     }
 }

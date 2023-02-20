@@ -4,6 +4,7 @@ using Domain.Interfaces;
 
 namespace Domain.Services
 {
+    /// <inheritdoc/>
     public class IntersectionFactory: IIntersectionFactory
     {
         /// <inheritdoc/>
@@ -12,7 +13,7 @@ namespace Domain.Services
             if (shape1 is Cube && shape2 is Cube)
                 return new IntersectionCubeService();
 
-            return null!;
+            return new IntersectionDummyService();
         }
     }
 }
