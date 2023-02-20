@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Application.ApplicationsServices.Interfaces;
@@ -79,17 +80,24 @@ namespace DNV_Cube_Intersection_App
                 if (intersectionResult)
                 {
                     var intersectionVolume = await _intersectionApplicationService.IntersectionVolumeAsync(cube1, cube2);
-                    Response = $"The intersected volume is: {intersectionVolume} units"; ;
+                    SetResponse($"The intersected volume is: {intersectionVolume} units");
                 }
                 else
                 {
-                    Response = "Don't intersect";
+                    SetResponse("Don't intersect");
                 }
             }
             catch (Exception ex)
             {
-                Response = $"Exception thrown: {ex.Message}";
+                SetResponse($"Exception thrown: {ex.Message}");
             }
+        }
+
+        private async void SetResponse(string response)
+        {
+            Response = "Loading...";
+            await Task.Delay(500);
+            Response = response;
         }
 
         #endregion
